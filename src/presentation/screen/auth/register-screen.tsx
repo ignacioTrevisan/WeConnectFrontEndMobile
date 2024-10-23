@@ -163,7 +163,7 @@ export const RegisterScreen = () => {
                     }}>
 
 
-                        <Text style={{ fontFamily: 'Roboto-Medium', fontSize: 46 }}>WeConnect</Text>
+                        <Text style={{ fontFamily: 'Roboto-Medium', fontSize: 46, color: colors.text }}>WeConnect</Text>
                     </Animated.View>
 
                     {isLoading ?
@@ -300,7 +300,7 @@ export const RegisterScreen = () => {
                     }
                     <View style={{ position: 'absolute', bottom }}>
                         <Pressable onPress={() => navigate('Login' as never)}>
-                            <Text>¿Ya tienes cuenta? Presione acá</Text>
+                            <Text style={{ color: colors.text }}>¿Ya tienes cuenta? Presione acá</Text>
                         </Pressable>
                     </View>
                 </View>

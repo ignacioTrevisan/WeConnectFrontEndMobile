@@ -53,7 +53,7 @@ export const ProfileScreen = ({ route }: Props) => {
                 <ActivityIndicator style={{ position: 'absolute', left: width / 2, top: height / 2 }} />
             ) : (
                 <>
-                    <View style={{ backgroundColor: 'white', padding: 10, width: '100%', marginTop: 15 }}>
+                    <View style={{ backgroundColor: colors.background, padding: 10, width: '100%', marginTop: 15 }}>
                         <View style={{ flexDirection: 'row', height: 100, alignItems: 'center' }}>
                             {userLoaded && (
                                 <Image
@@ -69,27 +69,27 @@ export const ProfileScreen = ({ route }: Props) => {
                                     }}
                                 />
                             )}
-                            <Text style={{ fontSize: 32, paddingLeft: 15 }}>{userLoaded?.DisplayName}</Text>
+                            <Text style={{ fontSize: 32, paddingLeft: 15, color: colors.text }}>{userLoaded?.DisplayName}</Text>
                         </View>
 
                         <View style={{ flexDirection: 'row', marginTop: 20, justifyContent: 'space-between', height: 200 }}>
 
                             <View style={{ flexDirection: 'column', flexWrap: 'wrap', columnGap: 25, height: 200 }}>
-                                <Text style={{ paddingLeft: 5, fontWeight: 'bold' }}>Datos personales</Text>
+                                <Text style={{ paddingLeft: 5, fontWeight: 'bold', color: colors.text }}>Datos personales</Text>
                                 <View style={{ width: 120, height: 1, marginBottom: 10, borderWidth: 1, borderColor: colors.separadores }} />
 
                                 <View style={{ rowGap: 10 }}>
 
                                     <View style={{ flexDirection: 'row' }}>
 
-                                        <Text style={{ fontWeight: 'bold' }}>Nombre: </Text>
+                                        <Text style={{ fontWeight: 'bold', color: colors.text }}>Nombre: </Text>
                                         <Text>{userLoaded?.Name}</Text>
                                     </View>
 
                                     {userLoaded?.LastName &&
                                         <View style={{ flexDirection: 'row' }}>
 
-                                            <Text style={{ fontWeight: 'bold' }}>Apellido: </Text>
+                                            <Text style={{ fontWeight: 'bold', color: colors.text }}>Apellido: </Text>
                                             <Text>{userLoaded?.LastName}</Text>
                                         </View>
                                     }
@@ -97,16 +97,16 @@ export const ProfileScreen = ({ route }: Props) => {
                                     {userLoaded?.genero &&
                                         <View style={{ flexDirection: 'row' }}>
 
-                                            <Text style={{ fontWeight: 'bold' }}>Genero: </Text>
-                                            <Text>{userLoaded?.genero}</Text>
+                                            <Text style={{ fontWeight: 'bold', color: colors.text }}>Genero: </Text>
+                                            <Text style={{ color: colors.text }}>{userLoaded?.genero}</Text>
                                         </View>
                                     }
 
                                     {userLoaded?.fechaNacimiento &&
                                         <View style={{ flexDirection: 'column' }}>
 
-                                            <Text style={{ fontWeight: 'bold' }}>fechaNacimiento: </Text>
-                                            <Text>
+                                            <Text style={{ fontWeight: 'bold', color: colors.text }}>fechaNacimiento: </Text>
+                                            <Text style={{ color: colors.text }}>
                                                 {transformDateUTC(new Date(userLoaded?.fechaNacimiento), true)}
                                             </Text>
                                         </View>
@@ -115,36 +115,36 @@ export const ProfileScreen = ({ route }: Props) => {
 
                                 </View>
                             </View>
-                            <View style={{ flexDirection: 'column', flexWrap: 'wrap', height: 100, columnGap: 25 }}>
-                                <Text style={{ paddingLeft: 5, fontWeight: 'bold' }}>Contacto</Text>
+                            <View style={{ flexDirection: 'column', flexWrap: 'wrap', height: 300, columnGap: 25 }}>
+                                <Text style={{ paddingLeft: 5, fontWeight: 'bold', color: colors.text }}>Contacto</Text>
                                 <View style={{ width: 120, height: 1, marginBottom: 10, borderWidth: 1, borderColor: colors.separadores }} />
 
-                                <View style={{ rowGap: 10 }}>
 
-                                    {userLoaded?.Email &&
-                                        <View style={{ flexDirection: 'column' }}>
 
-                                            <Text style={{ fontWeight: 'bold' }}>Email: </Text>
-                                            <Text>
-                                                {userLoaded?.Email}
-                                            </Text>
-                                        </View>
-                                    }
-                                    {userLoaded?.numeroDeTelefono &&
-                                        <View style={{ flexDirection: 'column' }}>
+                                {userLoaded?.Email &&
+                                    <View style={{ flexDirection: 'column' }}>
 
-                                            <Text style={{ fontWeight: 'bold' }}>numeroDeTelefono: </Text>
-                                            <Text>
-                                                {userLoaded?.numeroDeTelefono}
-                                            </Text>
-                                        </View>
-                                    }
+                                        <Text style={{ fontWeight: 'bold', color: colors.text }}>Email: </Text>
+                                        <Text>
+                                            {userLoaded?.Email}
+                                        </Text>
+                                    </View>
+                                }
+                                {userLoaded?.numeroDeTelefono &&
+                                    <View style={{ flexDirection: 'column' }}>
 
-                                </View>
+                                        <Text style={{ fontWeight: 'bold', color: colors.text }}>numeroDeTelefono: </Text>
+                                        <Text>
+                                            {userLoaded?.numeroDeTelefono}
+                                        </Text>
+                                    </View>
+                                }
+
+
                             </View>
 
                             <View style={{ position: 'absolute', right: 0, bottom: 0 }}>
-                                {userLoaded?.creationDate && <Text>Se unio el: {transformDateUTC(new Date(userLoaded.creationDate), true)}</Text>}
+                                {userLoaded?.creationDate && <Text style={{ color: colors.text }}>Se unio el: {transformDateUTC(new Date(userLoaded.creationDate), true)}</Text>}
                             </View>
                         </View>
                     </View>

@@ -56,7 +56,7 @@ export const PersonalPostCard = ({ DisplayName, GetAllPostScreen }: Props) => {
     return (
 
 
-        <View style={[styles.bodyCard, { flexDirection: 'column', padding: 10, backgroundColor: colors.background }]}>
+        <View style={[styles.bodyCard, { flexDirection: 'column', padding: 10, backgroundColor: colors.cardBackground }]}>
 
             <View style={{ justifyContent: 'space-between', flexDirection: 'row' }}>
                 <View style={{ marginLeft: 5, flexDirection: 'row', alignItems: 'center' }}>

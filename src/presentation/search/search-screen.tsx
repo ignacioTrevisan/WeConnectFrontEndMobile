@@ -1,13 +1,10 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { useWindowDimensions, View, TextInput, StyleSheet, ActivityIndicator, FlatList } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { GlobalStyles } from '../styles/globalStyles';
-import { UseUser } from '../../hooks/useUser';
-import { useFocusEffect } from '@react-navigation/native';
 import { useQuery } from '@tanstack/react-query';
 import { FindAllDisplayNamesByUsers } from '../../core/use-cases/users/get-all-displayName-by-user';
 import { WeConnectFetcher } from '../../config/adapters/weConnectFetcher';
-import { Text } from 'react-native';
 import { FullScreenLoader } from '../components/fullScreenLoader';
 import { FindUsersByDisplayName } from '../../core/use-cases/users/get-users-by-displayNames';
 import { UseDebouncer } from '../hooks/useDebouncer';

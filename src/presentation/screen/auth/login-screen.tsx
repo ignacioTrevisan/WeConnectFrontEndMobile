@@ -162,7 +162,7 @@ export const LoginScreen = () => {
                 }}>
 
 
-                    <Text style={{ fontFamily: 'Roboto-Medium', fontSize: 46 }}>WeConnect</Text>
+                    <Text style={{ fontFamily: 'Roboto-Medium', fontSize: 46, color: colors.text }}>WeConnect</Text>
                 </Animated.View>
 
                 {isLoading ?
@@ -248,7 +248,7 @@ export const LoginScreen = () => {
                         {snackBar.msg}
                     </Snackbar>
                     <Pressable onPress={() => navigate('Register' as never)}>
-                        <Text>¿Aún no tienes cuénta? Presione acá</Text>
+                        <Text style={{ color: colors.text }}>¿Aún no tienes cuénta? Presione acá</Text>
                     </Pressable>
                 </View>
             </View>

@@ -61,7 +61,7 @@ export const PostCard = ({ post, principal }: Props) => {
     }
     return (
 
-        <View style={[styles.bodyCard, { flexDirection: 'column', marginBottom: 25, backgroundColor: colors.background, paddingHorizontal: principal ? 10 : 20, paddingBottom: 10, }]}>
+        <View style={[styles.bodyCard, { flexDirection: 'column', marginBottom: 25, backgroundColor: colors.cardBackground, paddingHorizontal: principal ? 10 : 20, paddingBottom: 10, }]}>
             <Pressable onPress={() => navigate('Profile', { uid: post.Uid ? post.Uid : '123' })}>
 
                 <View style={{ justifyContent: 'space-between', flexDirection: 'row' }}>
@@ -117,12 +117,15 @@ export const PostCard = ({ post, principal }: Props) => {
                     flexDirection: 'row',
                     alignItems: 'center',
                 }}>
+                    <Pressable onPress={() => postPressed()}>
 
-                    <Icon name='chatbubbles-outline' size={principal ? 22 : 18} color={'blue'} />
-                    <Text style={{ fontSize: principal ? 16 : 14 }}>
 
-                        {post.comments.length}
-                    </Text>
+                        <Icon name='chatbubbles-outline' size={principal ? 22 : 18} color={'blue'} />
+                        <Text style={{ fontSize: principal ? 16 : 14 }}>
+
+                            {post.comments.length}
+                        </Text>
+                    </Pressable>
                 </View>
             </View>
         </View >

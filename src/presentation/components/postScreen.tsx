@@ -1,5 +1,5 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
-import { View, Text, useWindowDimensions, StyleSheet, Image, FlatList, TextInput, KeyboardAvoidingView, Platform } from 'react-native';
+import { View, Text, StyleSheet, Image, FlatList, TextInput, KeyboardAvoidingView, Platform } from 'react-native';
 import { StackScreenProps } from '@react-navigation/stack';
 import { RootStackParams } from '../navigation/stackNavigator';
 import { GetPostByid } from '../../core/use-cases/post/get-post-by-id';
@@ -27,7 +27,6 @@ export const PostScreen = ({ route }: Props) => {
     const { top } = useSafeAreaInsets();
     const [text, setText] = useState('');
     const user = authStore(state => state.user);
-    const [isLoading, setIsLoading] = useState(true);
 
     useFocusEffect(
         useCallback(() => {
@@ -69,75 +68,78 @@ export const PostScreen = ({ route }: Props) => {
                 Uid: user.uid,
                 isComment: true,
             };
-            setIsLoading(true);
             const resp = await SubmitPost(WeConnectFetcher, coment, token);
             if (resp.ok && resp.data) {
                 const respComment = await AddComent(WeConnectFetcher, id, resp.data.toString());
                 if (respComment.ok) {
                     setComment(prevComments => [...(prevComments || []), coment]);
+                    setText('');
                 }
             }
         }
     };
 
     return (
-        <KeyboardAvoidingView
-            style={{ flex: 1, backgroundColor: colors.background }}
-            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-            keyboardVerticalOffset={top + 60} // Ajusta según la altura del header
-        >
-            <View style={[GlobalStyles.globalMargin, { flex: 1 }]}>
-                <View style={[styles.PostContainer, { backgroundColor: colors.cardBackground }]}>
-                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                        <View style={{ width: 50, height: 50 }}>
-                            {Post && (
-                                <Image
-                                    source={{
-                                        uri: Post.UserPhoto ? Post.UserPhoto : 'https://res.cloudinary.com/nachotrevisan/image/upload/v1728332295/weConnect/mlereb0beazyrjqkqzvb.jpg',
-                                    }}
-                                    style={{ width: '100%', height: '100%', borderRadius: 50 }}
-                                />
-                            )}
+        <View style={{ flex: 1, backgroundColor: colors.background }}>
+
+
+            <KeyboardAvoidingView
+                style={{ flex: 1, backgroundColor: colors.cardBackground }}
+                behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+            >
+                <View style={[GlobalStyles.globalMargin, { flex: 1 }]}>
+                    <View style={[styles.PostContainer, { backgroundColor: colors.cardBackground }]}>
+                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                            <View style={{ width: 50, height: 50 }}>
+                                {Post && (
+                                    <Image
+                                        source={{
+                                            uri: Post.UserPhoto ? Post.UserPhoto : 'https://res.cloudinary.com/nachotrevisan/image/upload/v1728332295/weConnect/mlereb0beazyrjqkqzvb.jpg',
+                                        }}
+                                        style={{ width: '100%', height: '100%', borderRadius: 50 }}
+                                    />
+                                )}
+                            </View>
+                            <Text style={{ color: colors.text, fontSize: 24, marginLeft: 5 }}>@{Post?.DisplayName}</Text>
                         </View>
-                        <Text style={{ color: colors.text, fontSize: 24, marginLeft: 5 }}>@{Post?.DisplayName}</Text>
+                        <View style={{ flexDirection: 'column', justifyContent: 'space-between', marginTop: 10, paddingBottom: 10, paddingLeft: 5 }}>
+                            <Text style={{ color: colors.text }}>{Post?.bodyPost}</Text>
+                            <Text style={{ color: colors.text, marginTop: 20 }}>
+                                Le ha gustado a {Post?.likes.length} personas
+                            </Text>
+                        </View>
                     </View>
-                    <View style={{ flexDirection: 'column', justifyContent: 'space-between', marginTop: 10, paddingBottom: 10, paddingLeft: 5 }}>
-                        <Text style={{ color: colors.text }}>{Post?.bodyPost}</Text>
-                        <Text style={{ color: colors.text, marginTop: 20 }}>
-                            Le ha gustado a {Post?.likes.length} personas
-                        </Text>
+
+                    <FlatList
+                        data={comment}
+                        numColumns={1}
+                        keyExtractor={(item, index) => `${item.id}-${index}`}
+                        renderItem={({ item }) => <PostCard post={item} />}
+                        ListEmptyComponent={() => <Text style={{ textAlign: 'center', marginTop: 20 }}>No hay comentarios aún...</Text>}
+                        contentContainerStyle={{ flexGrow: 1 }}
+                        style={{ flex: 1, marginTop: 10 }}
+                    />
+
+                    <View style={{ padding: 10, backgroundColor: colors.SecondaryButtonsBackGround, borderRadius: 5 }}>
+                        <TextInput
+                            style={{ backgroundColor: colors.background, borderRadius: 5, marginHorizontal: 5, marginTop: 15, color: colors.text }}
+                            multiline
+                            placeholder='Agrega un comentario'
+                            value={text}
+                            autoCapitalize="sentences"
+                            autoCorrect={false}
+                            placeholderTextColor={colors.SecondaryButtonsBackGround}
+                            onChangeText={value => setText(value)}
+                        />
+                        <Buttons
+                            text="Comentar"
+                            styles={{ backgroundColor: colors.PrimaryButtonsBackGround, alignSelf: 'flex-end', padding: 5, borderRadius: 10, marginTop: 10 }}
+                            onPress={startComent}
+                        />
                     </View>
                 </View>
-
-                <FlatList
-                    data={comment}
-                    numColumns={1}
-                    keyExtractor={(item, index) => `${item.id}-${index}`}
-                    renderItem={({ item }) => <PostCard post={item} />}
-                    ListEmptyComponent={() => <Text style={{ textAlign: 'center', marginTop: 20 }}>No hay comentarios aún...</Text>}
-                    contentContainerStyle={{ flexGrow: 1 }}
-                    style={{ flex: 1, marginTop: 10 }}
-                />
-
-                <View style={{ padding: 10, backgroundColor: colors.SecondaryButtonsBackGround, borderRadius: 5 }}>
-                    <TextInput
-                        style={{ backgroundColor: colors.background, borderRadius: 5, marginHorizontal: 5, marginTop: 15, color: colors.text }}
-                        multiline
-                        placeholder='Agrega un comentario'
-                        value={text}
-                        autoCapitalize="sentences"
-                        autoCorrect={false}
-                        placeholderTextColor={colors.SecondaryButtonsBackGround}
-                        onChangeText={value => setText(value)}
-                    />
-                    <Buttons
-                        text="Comentar"
-                        styles={{ backgroundColor: colors.PrimaryButtonsBackGround, alignSelf: 'flex-end', padding: 5, borderRadius: 10, marginTop: 10 }}
-                        onPress={startComent}
-                    />
-                </View>
-            </View>
-        </KeyboardAvoidingView>
+            </KeyboardAvoidingView>
+        </View>
     );
 };
 
