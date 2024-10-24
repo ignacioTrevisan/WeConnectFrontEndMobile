@@ -14,7 +14,7 @@ export class PostMapper {
             creationDate: post.Fecha_de_post,
             comments: post.Comentarios,
             likes: post.Likes,
-            itLikeForMe: false, //TODO ESTO ESTA EN FALSE CONSTANTEMENTE, HAY QUE HACER ALGO
+            itLikeForMe: false,
             Uid: post.Uid,
             isComment: post.esComentario
         }

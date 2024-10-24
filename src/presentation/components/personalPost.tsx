@@ -1,57 +1,41 @@
 import React, { useContext, useState } from 'react'
 import { Image, Pressable, StyleSheet, TextInput, View } from 'react-native'
-import { Button, Snackbar, Text } from 'react-native-paper';
-import { colors } from '../../config/theme/theme';
+import { Button, Text } from 'react-native-paper';
 import { authStore } from '../store/auth/auth-store';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { SubmitPost } from '../../core/use-cases/post/submit-post';
-import { WeConnectFetcher } from '../../config/adapters/weConnectFetcher';
-import { uiStore } from '../store/ui/ui-store';
 import { ThemeContext } from '../context/themeContext';
+import { AlterPostStore } from '../store/alter/alterPost';
 
 
 interface Props {
     DisplayName: string
-    GetAllPostScreen: () => void;
+    GetAllPost: () => void;
+    initialText?: string;
+    Method: (bodyPost: string, idPost?: string) => void;
+    buttonText: string,
 }
 
-export const PersonalPostCard = ({ DisplayName, GetAllPostScreen }: Props) => {
-    const { colors } = useContext(ThemeContext);
+export const PersonalPostCard = ({ DisplayName, GetAllPost, initialText = '', Method, buttonText }: Props) => {
 
     const user = authStore(state => state.user)
-    const setIsLoading = uiStore(state => state.setIsLoading);
-    const visibleSnackBar = uiStore(state => state.visibleSnackBar)
+    const post = AlterPostStore(state => state.post)
+    const [text, setText] = useState(initialText)
+    const clearPost = AlterPostStore(state => state.clearPost)
 
-    const [text, setText] = useState('')
-    const submit = async () => {
-        const token = await AsyncStorage.getItem('@token');
+    const pressed = () => {
+        if (!post) {
+            Method(text)
+            setText('')
+            GetAllPost()
+        } else {
+            console.log('noi 0borra')
 
-        if (user && user.UserPhoto && token) {
-
-            const post = {
-                bodyPost: text,
-                UserPhoto: user.UserPhoto,
-                DisplayName: user.DisplayName,
-                creationDate: new Date(),
-                comments: [],
-                likes: [],
-                itLikeForMe: false,
-                Uid: user.uid,
-                isComment: false
-            }
-            setIsLoading(true);
-            const resp = await SubmitPost(WeConnectFetcher, post, token)
-            if (resp.ok) {
-                GetAllPostScreen()
-                visibleSnackBar(
-                    'Post subido correctamente. '
-                )
-            } else {
-                setIsLoading(false);
-                //TODO: Mostrar mensaje de error.
-            }
+            Method(text, post.id)
+            GetAllPost()
         }
+        clearPost()
+
     }
+    const { colors } = useContext(ThemeContext);
 
     return (
 
@@ -101,9 +85,9 @@ export const PersonalPostCard = ({ DisplayName, GetAllPostScreen }: Props) => {
             />
 
             <View style={{ width: '100%', alignItems: 'flex-end', flexDirection: 'column' }}>
-                <Pressable onPress={submit}>
+                <Pressable onPress={() => pressed()}>
 
-                    <Button mode='contained' style={{ width: '30%', marginTop: 5, borderColor: 'blue', backgroundColor: 'blue' }}><Text style={{ color: 'white', }}>Publicar</Text></Button>
+                    <Button mode='contained' style={{ width: '30%', marginTop: 5, borderColor: 'blue', backgroundColor: 'blue' }}><Text style={{ color: 'white', }}>{buttonText}</Text></Button>
                 </Pressable>
             </View>
         </View >

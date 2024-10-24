@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { View, StyleSheet, useWindowDimensions, ScrollView, ActivityIndicator, Pressable, Platform } from 'react-native';
+import { View, StyleSheet, useWindowDimensions, ScrollView, ActivityIndicator } from 'react-native';
 import { ButtonConfiguration } from '../../components/buttonConfiguration'
 import { Text } from 'react-native-paper';
 import { GlobalStyles } from '../../styles/globalStyles';
@@ -8,15 +8,15 @@ import { Buttons } from '../../components/buttons';
 import { AlterStore } from '../../store/alter/alterUser';
 import { ChangePersonalConfiguraton } from '../../../core/use-cases/users/change-personal-configuration';
 import { WeConnectFetcher } from '../../../config/adapters/weConnectFetcher';
-import { PasswordModal } from '../../components/passwordModal';
 import { uiStore } from '../../store/ui/ui-store';
-import { ProfilePhotoPickerModal } from '../../components/profilePhotoPickerModal';
 import { ThemeContext } from '../../context/themeContext';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { User } from '../../../core/entities/user-entities';
 import { TransformVariable } from '../../../helpers/transformVariable';
 import { HamburgerMenu } from '../../components/hamburgerMenu';
 import Dialog from 'react-native-dialog';
+import { ProfilePhotoPickerModal } from '../../components/modals/configuration/profilePhotoPickerModal';
+import { PasswordModal } from '../../components/modals/configuration/passwordModal';
 
 export const AccountConfiguration = () => {
   const { colors } = useContext(ThemeContext);

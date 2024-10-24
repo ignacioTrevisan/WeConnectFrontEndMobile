@@ -11,9 +11,11 @@ export const VerifyToken = async (): Promise<ApiResponse<User>> => {
 
         const token = await AsyncStorage.getItem('@token');
         const uid = await AsyncStorage.getItem('@uid');
+        console.log(token, '---', uid)
         if (token && uid) {
             const resp = await RenewToken(WeConnectFetcher, token, uid);
             if (resp.ok) {
+                console.log(resp)
                 const respDos = await FindByUid(WeConnectFetcher, uid);
                 if (respDos.ok && respDos.data) {
 
@@ -24,8 +26,11 @@ export const VerifyToken = async (): Promise<ApiResponse<User>> => {
 
                 }
             }
+        } else {
+            console.log('nop?')
         }
         return {
+
             ok: false,
             msg: 'No hay token o uid'
         }

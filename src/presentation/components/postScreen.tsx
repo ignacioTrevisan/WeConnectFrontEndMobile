@@ -88,7 +88,7 @@ export const PostScreen = ({ route }: Props) => {
                 behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
             >
                 <View style={[GlobalStyles.globalMargin, { flex: 1 }]}>
-                    <View style={[styles.PostContainer, { backgroundColor: colors.cardBackground }]}>
+                    <View style={[styles.PostContainer, { backgroundColor: colors.SecondaryButtonsBackGround }]}>
                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                             <View style={{ width: 50, height: 50 }}>
                                 {Post && (

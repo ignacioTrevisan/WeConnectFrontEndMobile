@@ -28,8 +28,8 @@ export const LoginScreen = () => {
 
     useFocusEffect(
         useCallback(() => {
+            setIsStep(0);
             avisado()
-            setIsStep(1);
             setForm({
                 DisplayName: '',
                 Password: ''
@@ -77,6 +77,7 @@ export const LoginScreen = () => {
         nextAnimation();
     }, [])
     const verifyToken = async () => {
+        console.log('verificando token')
         setIsLoading(true);
         try {
             const resp = await VerifyToken();

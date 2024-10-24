@@ -14,7 +14,6 @@ export const SubmitPost = async (fetcher: HttpAdapter, post: Post, token: string
                 esComentario: post.isComment,
 
             });
-        console.log(resp)
         return {
             ok: true,
             msg: 'Post subido correctamente',

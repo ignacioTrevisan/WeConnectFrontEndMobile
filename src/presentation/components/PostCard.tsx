@@ -1,5 +1,5 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react'
-import { Image, Pressable, StyleSheet, View } from 'react-native'
+import { Alert, Image, Pressable, StyleSheet, TextInput, View } from 'react-native'
 import { Text } from 'react-native-paper'
 import { Post } from '../../core/entities/post-entities';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -9,9 +9,14 @@ import { WeConnectFetcher } from '../../config/adapters/weConnectFetcher';
 import { authStore } from '../store/auth/auth-store';
 import { ThemeContext } from '../context/themeContext';
 import { GetPostByid } from '../../core/use-cases/post/get-post-by-id';
-import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { NavigationProp, useFocusEffect, useNavigation } from '@react-navigation/native';
 import { PostScreen } from './postScreen';
 import { RootStackParams } from '../navigation/stackNavigator';
+import { uiStore } from '../store/ui/ui-store';
+import Dialog from 'react-native-dialog';
+import { UsePost } from '../../hooks/usePost';
+import { ModalPostEdit } from './modals/post/modalPostEdit';
+import { AlterPostStore } from '../store/alter/alterPost';
 
 
 interface Props {
@@ -20,7 +25,6 @@ interface Props {
 }
 export const PostCard = ({ post, principal }: Props) => {
     const { colors } = useContext(ThemeContext);
-
     if (!post) {
         return <Text>No se encontró la publicación.</Text>;
     }
@@ -59,10 +63,21 @@ export const PostCard = ({ post, principal }: Props) => {
         }
 
     }
+    const tooglePostModalEditIsOpen = uiStore(state => state.tooglePostModalEditIsOpen)
+    const setPost = AlterPostStore(state => state.setPost)
+
+    const LongPress = () => {
+        setPost(post)
+        tooglePostModalEditIsOpen()
+    }
+
     return (
 
         <View style={[styles.bodyCard, { flexDirection: 'column', marginBottom: 25, backgroundColor: colors.cardBackground, paddingHorizontal: principal ? 10 : 20, paddingBottom: 10, }]}>
-            <Pressable onPress={() => navigate('Profile', { uid: post.Uid ? post.Uid : '123' })}>
+            <Pressable onPress={() => navigate('Profile', { uid: post.Uid ? post.Uid : '123' })}
+                onLongPress={() => LongPress()}
+
+            >
 
                 <View style={{ justifyContent: 'space-between', flexDirection: 'row' }}>
                     <View style={{ marginLeft: 5, flexDirection: 'row', alignItems: 'center', paddingTop: 10 }}>
@@ -86,7 +101,8 @@ export const PostCard = ({ post, principal }: Props) => {
                     <Text>{post.creationDate ? transformDateUTC(new Date(post.creationDate)) : 'Sin fecha'}</Text>
                 </View>
             </Pressable>
-            <Pressable onPress={() => postPressed()}>
+            <Pressable onPress={() => postPressed()}
+                onLongPress={() => LongPress()}>
                 <Text style={{ marginTop: 10 }}>{post.bodyPost ? post.bodyPost : 'Sin post'}</Text>
             </Pressable>
             <View style={{
@@ -99,7 +115,8 @@ export const PostCard = ({ post, principal }: Props) => {
                 justifyContent: 'space-between',
 
             }}>
-                <Pressable onPress={putLike}>
+                <Pressable onPress={putLike}
+                    onLongPress={() => LongPress()}>
 
                     <View style={{
                         left: 0,
@@ -113,11 +130,13 @@ export const PostCard = ({ post, principal }: Props) => {
                         </Text>
                     </View>
                 </Pressable>
+
                 <View style={{
                     flexDirection: 'row',
                     alignItems: 'center',
                 }}>
-                    <Pressable onPress={() => postPressed()}>
+                    <Pressable onPress={() => postPressed()}
+                        onLongPress={() => LongPress()}>
 
 
                         <Icon name='chatbubbles-outline' size={principal ? 22 : 18} color={'blue'} />
@@ -129,6 +148,7 @@ export const PostCard = ({ post, principal }: Props) => {
                 </View>
             </View>
         </View >
+
     )
 }
 const styles = StyleSheet.create({
@@ -138,3 +158,5 @@ const styles = StyleSheet.create({
         marginBottom: 15
     }
 })
+
+

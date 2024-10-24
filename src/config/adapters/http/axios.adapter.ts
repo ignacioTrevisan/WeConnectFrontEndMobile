@@ -80,6 +80,29 @@ export class AxiosAdapter implements HttpAdapter {
 
     }
 
+    async delete<T>(url: string, options?: Record<string, unknown> | undefined): Promise<T> {
+
+        try {
+
+            const { data } = await this.axiosInstance.delete<T>(url, options);
+
+            return data;
+
+        } catch (error) {
+            console.log(error)
+            if (axios.isAxiosError(error)) {
+                if (error.response) {
+                    throw new Error(error.response.data.msg || 'Error en la respuesta del servidor');
+                } else {
+                    console.log('Error de red o configuración:', error.message);
+                }
+            }
+            throw new Error(`Error fetching put: ${url}`);
+        }
+
+    }
+
+
 
 
 

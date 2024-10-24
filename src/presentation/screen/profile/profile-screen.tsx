@@ -38,11 +38,11 @@ export const ProfileScreen = ({ route }: Props) => {
                 return;
             }
             loadUser(id);
-            getByUser(id);
+            GetByUser(id);
         }, [id])
     );
 
-    const { getByUser, postByUser } = UsePost();
+    const { GetByUser, postByUser } = UsePost();
 
 
     const { width, height } = useWindowDimensions();

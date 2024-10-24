@@ -9,6 +9,8 @@ import { useContext, useEffect } from "react";
 import { ThemeContext } from "../context/themeContext";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParams } from "./stackNavigator";
+import { ModalPostEdit } from "../components/modals/post/modalPostEdit";
+import { uiStore } from "../store/ui/ui-store";
 
 export const BottomNavigator = () => {
     const { colors } = useContext(ThemeContext);
@@ -25,7 +27,10 @@ export const BottomNavigator = () => {
     }, [status, reset]);
 
     const Tab = createBottomTabNavigator();
+
     return (
+
+
         <Tab.Navigator
             screenOptions={{
                 headerShown: false,

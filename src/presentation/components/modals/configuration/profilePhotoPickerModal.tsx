@@ -1,12 +1,13 @@
 import React, { useContext, useState } from 'react'
 import { Modal, View, useWindowDimensions, Alert, Image, ActivityIndicator } from 'react-native'
-import { uiStore } from '../store/ui/ui-store';
-import { Buttons } from './buttons';
-import { authStore } from '../store/auth/auth-store';
+
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
-import { ChangePersonalConfiguraton } from '../../core/use-cases/users/change-personal-configuration';
-import { WeConnectFetcher } from '../../config/adapters/weConnectFetcher';
-import { ThemeContext } from '../context/themeContext';
+import { ThemeContext } from '../../../context/themeContext';
+import { uiStore } from '../../../store/ui/ui-store';
+import { authStore } from '../../../store/auth/auth-store';
+import { ChangePersonalConfiguraton } from '../../../../core/use-cases/users/change-personal-configuration';
+import { WeConnectFetcher } from '../../../../config/adapters/weConnectFetcher';
+import { Buttons } from '../../buttons';
 
 export const ProfilePhotoPickerModal = () => {
     const { colors } = useContext(ThemeContext);

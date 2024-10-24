@@ -1,11 +1,11 @@
 import React, { useContext, useState } from 'react'
 import { Modal, View, Text, TextInput, useWindowDimensions, Alert } from 'react-native'
-import { uiStore } from '../store/ui/ui-store';
-import { Buttons } from './buttons';
-import { ChangePassword } from '../../core/use-cases/users/change-password';
-import { WeConnectFetcher } from '../../config/adapters/weConnectFetcher';
-import { authStore } from '../store/auth/auth-store';
-import { ThemeContext } from '../context/themeContext';
+import { uiStore } from '../../../store/ui/ui-store';
+import { Buttons } from '../.././buttons';
+import { ChangePassword } from '../../../../core/use-cases/users/change-password';
+import { WeConnectFetcher } from '../../../../config/adapters/weConnectFetcher';
+import { authStore } from '../../../store/auth/auth-store';
+import { ThemeContext } from '../../../context/themeContext';
 
 export const PasswordModal = () => {
     const PasswordModalIsOpen = uiStore(state => state.PasswordModalIsOpen);

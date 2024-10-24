@@ -9,6 +9,7 @@ export const WeConnectFetcher = new AxiosAdapter({
     }
 })
 
-// baseUrl: 'http://192.168.0.100:4000/api/', params: {
+// baseUrl: 'http://tuipv4:puertoDeApi/api/', params: {
+
 
 // baseUrl: 'https://weconnectbackend.onrender.com/api/', params: {
